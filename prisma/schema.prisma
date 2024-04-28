@@ -14,15 +14,15 @@ datasource db {
 }
 
 model Course {
-  id          String  @id @default(uuid()) @map("_id") @db.ObjectId
-  userId      String  @db.ObjectId
+  id          String  @id @default(uuid()) @map("_id")
+  userId      String
   title       String  @db.String
   description String? @db.String
   imageUrl    String? @db.String
   price       Float?
   isPublished Boolean @default(false)
 
-  categoryId String?   @db.ObjectId
+  categoryId String?
   category   Category? @relation(fields: [categoryId], references: [id])
 
   attachments Attachment[]
@@ -32,17 +32,17 @@ model Course {
 }
 
 model Category {
-  id      String   @id @default(uuid()) @map("_id") @db.ObjectId
+  id      String   @id @default(uuid()) @map("_id")
   name    String   @unique
   courses Course[]
 }
 
 model Attachment {
-  id   String @id @default(uuid()) @map("_id") @db.ObjectId
+  id   String @id @default(uuid()) @map("_id")
   name String
   url  String @db.String
 
-  courseId String @db.ObjectId
+  courseId String
   course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
